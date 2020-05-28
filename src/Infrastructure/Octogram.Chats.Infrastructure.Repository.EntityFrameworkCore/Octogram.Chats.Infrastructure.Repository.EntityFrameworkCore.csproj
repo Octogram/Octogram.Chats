@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Domain\Octogram.Chats.Domain.Chats\Octogram.Chats.Domain.Chats.csproj" />
+      <ProjectReference Include="..\..\Domain\Octogram.Chats.Domain.Members\Octogram.Chats.Domain.Members.csproj" />
+      <ProjectReference Include="..\..\Domain\Octogram.Chats.Domain.Messages\Octogram.Chats.Domain.Messages.csproj" />
+    </ItemGroup>
+</Project>
