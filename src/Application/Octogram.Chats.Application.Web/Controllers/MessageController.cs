@@ -2,11 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Messenger.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Octogram.Chats.Application.Web.Commands.Messages;
 using Octogram.Chats.Domain.Members;
 
-namespace Messenger.Web.Controllers
+namespace Octogram.Chats.Application.Web.Controllers
 {
 	[Route("messages")]
 	public class MessageController : ControllerBase
@@ -30,7 +31,7 @@ namespace Messenger.Web.Controllers
 			
 			await _mediator.Send(command, cancellationToken);
 
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpPut(Name = "PutMessage")]
@@ -38,7 +39,7 @@ namespace Messenger.Web.Controllers
 		{
 			await _mediator.Send(command, cancellationToken);
 
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpDelete("{messageId}", Name = "DeleteMessage")]
@@ -54,7 +55,7 @@ namespace Messenger.Web.Controllers
 
 			await _mediator.Send(command, cancellationToken);
 
-			return Ok();
+			return this.Ok();
 		}
 	}
 }

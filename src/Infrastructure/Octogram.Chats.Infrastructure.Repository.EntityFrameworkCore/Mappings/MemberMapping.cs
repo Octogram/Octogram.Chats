@@ -12,6 +12,9 @@ namespace Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore.Mappings
 			builder.ToTable("Members");
 
 			builder.HasKey(p => p.Id);
+
+			builder.Property(p => p.Id)
+				.ValueGeneratedNever();
 		}
 	}
 }

@@ -40,12 +40,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Infrastructure.Migrations", "src\Infrastructure\Octogram.Chats.Infrastructure.Migrations\Octogram.Chats.Infrastructure.Migrations.csproj", "{791B5C60-BDE2-4EA3-9EC7-4B97D06058B4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{12C2128E-794B-4922-B229-9A6CD7F1766B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Application.Web.IntegrationTests", "test\Octogram.Chats.Application.Web.IntegrationTests\Octogram.Chats.Application.Web.IntegrationTests.csproj", "{5F6D5640-9417-4147-90E6-3F054EA75C1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Infrastructure.Queries.Abstractions", "src\Infrastructure\Octogram.Chats.Infrastructure.Queries.Abstractions\Octogram.Chats.Infrastructure.Queries.Abstractions.csproj", "{3592FD63-1101-48C8-8626-4BD0D439F861}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Infrastructure.CommandsBus.MassTransit", "src\Infrastructure\Octogram.Chats.Infrastructure.CommandsBus.MassTransit\Octogram.Chats.Infrastructure.CommandsBus.MassTransit.csproj", "{BCCEC74F-78D5-4EBA-A60B-98D6EC824310}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12C2128E-794B-4922-B229-9A6CD7F1766B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12C2128E-794B-4922-B229-9A6CD7F1766B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD0C46DC-EC82-4017-848C-648C0248FAD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD0C46DC-EC82-4017-848C-648C0248FAD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD0C46DC-EC82-4017-848C-648C0248FAD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -106,6 +116,18 @@ Global
 		{791B5C60-BDE2-4EA3-9EC7-4B97D06058B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{791B5C60-BDE2-4EA3-9EC7-4B97D06058B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{791B5C60-BDE2-4EA3-9EC7-4B97D06058B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F6D5640-9417-4147-90E6-3F054EA75C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F6D5640-9417-4147-90E6-3F054EA75C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F6D5640-9417-4147-90E6-3F054EA75C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F6D5640-9417-4147-90E6-3F054EA75C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3592FD63-1101-48C8-8626-4BD0D439F861}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3592FD63-1101-48C8-8626-4BD0D439F861}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3592FD63-1101-48C8-8626-4BD0D439F861}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3592FD63-1101-48C8-8626-4BD0D439F861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCCEC74F-78D5-4EBA-A60B-98D6EC824310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCCEC74F-78D5-4EBA-A60B-98D6EC824310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCCEC74F-78D5-4EBA-A60B-98D6EC824310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCCEC74F-78D5-4EBA-A60B-98D6EC824310}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7162EAEB-1718-406E-85A3-A68850AE9046} = {4118363B-5E25-4302-8347-7B1A01537745}
@@ -126,5 +148,8 @@ Global
 		{98767249-06BF-4B7E-8D7A-CDE2FF7EE916} = {7162EAEB-1718-406E-85A3-A68850AE9046}
 		{E058A334-8FE9-44C9-B8DE-FAC82373520B} = {AC6A16DC-B3CD-4F8E-B038-ED355EB51296}
 		{791B5C60-BDE2-4EA3-9EC7-4B97D06058B4} = {AC6A16DC-B3CD-4F8E-B038-ED355EB51296}
+		{5F6D5640-9417-4147-90E6-3F054EA75C1D} = {213CF526-CBCA-4DDA-B826-A41575A16D94}
+		{3592FD63-1101-48C8-8626-4BD0D439F861} = {AC6A16DC-B3CD-4F8E-B038-ED355EB51296}
+		{BCCEC74F-78D5-4EBA-A60B-98D6EC824310} = {AC6A16DC-B3CD-4F8E-B038-ED355EB51296}
 	EndGlobalSection
 EndGlobal

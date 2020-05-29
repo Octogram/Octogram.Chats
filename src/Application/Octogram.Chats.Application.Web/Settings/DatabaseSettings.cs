@@ -1,6 +1,6 @@
 ﻿using Octogram.Chats.Infrastructure.IoC;
 
-namespace Messenger.Web.Settings
+namespace Octogram.Chats.Application.Web.Settings
 {
 	public class DatabaseSettings : IDatabaseSettings
 	{

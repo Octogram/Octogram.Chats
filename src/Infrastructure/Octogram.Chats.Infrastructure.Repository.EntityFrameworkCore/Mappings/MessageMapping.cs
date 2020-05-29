@@ -14,8 +14,7 @@ namespace Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore.Mappings
 
 			builder.HasKey(p => p.Id);
 
-			builder.Property(p => p.Id)
-				.ValueGeneratedNever();
+			builder.Property(p => p.Id);
 
 			builder.Property(p => p.Content)
 				.HasColumnName("Content")

@@ -5,11 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Domain\Octogram.Chats.Domain.Members\Octogram.Chats.Domain.Members.csproj" />
+      <ProjectReference Include="..\..\Application\Octogram.Chats.Application.Web.Commands\Octogram.Chats.Application.Web.Commands.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.0" />
+      <PackageReference Include="MassTransit" Version="6.3.2" />
     </ItemGroup>
 
 </Project>

@@ -4,25 +4,26 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
+using Octogram.Chats.Application.Web.Commands;
 using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
 
-namespace Messenger.Web.Behaviors
+namespace Octogram.Chats.Application.Web.Behaviors
 {
 public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
 	{
 		private readonly RepositoryDbContext _dbContext;
-		private readonly IMediator _mediator;
+		private readonly ICommandsBus _commandsBus;
 		private readonly ILogger<TransactionBehavior<TRequest, TResponse>> _logger;
 
 		public TransactionBehavior(
 			RepositoryDbContext dbContext,
-			IMediator mediator,
+			ICommandsBus commandsBus,
 			ILogger<TransactionBehavior<TRequest, TResponse>> logger)
 		{
 			_dbContext = dbContext
 				?? throw new ArgumentNullException(nameof(dbContext));
-			_mediator = mediator 
-				?? throw new ArgumentNullException(nameof(mediator));
+			_commandsBus = commandsBus
+				?? throw new ArgumentNullException(nameof(commandsBus));
 			_logger = logger
 				?? throw new ArgumentNullException(nameof(logger));
 		}
@@ -58,6 +59,8 @@ public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
 					_logger.LogInformation($"---- Transaction rollback {transaction.TransactionId}.");
 					throw;
 				}
+
+				await _commandsBus.SendAllAsync(cancellationToken);
 			}
 
 			return response;

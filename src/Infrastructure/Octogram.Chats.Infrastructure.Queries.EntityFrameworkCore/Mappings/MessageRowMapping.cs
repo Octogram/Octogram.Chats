@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Rows;
 
 namespace Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Mappings
 {
-	public class MessageTableMapping : IEntityTypeConfiguration<MessageRow>
+	public class MessageRowMapping : IEntityTypeConfiguration<MessageRow>
 	{
 		/// <inheritdoc />
 		public void Configure(EntityTypeBuilder<MessageRow> builder)

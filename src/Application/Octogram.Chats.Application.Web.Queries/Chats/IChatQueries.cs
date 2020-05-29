@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Octogram.Chats.Application.Web.Queries.Messages;
 
 namespace Octogram.Chats.Application.Web.Queries.Chats
 {
@@ -11,6 +12,6 @@ namespace Octogram.Chats.Application.Web.Queries.Chats
 
 		Task<ChatDetails> GetDetailsAsync(Guid accountId, Guid chatId, CancellationToken cancellationToken);
 
-		Task<IEnumerable<ChatMessage>> GetMessagesAsync(Guid accountId, Guid chatId, int page, int size, CancellationToken cancellationToken);
+		Task<PagedList<ChatMessage>> GetMessagesAsync(Guid accountId, Guid chatId, int page, int size, CancellationToken cancellationToken);
 	}
 }

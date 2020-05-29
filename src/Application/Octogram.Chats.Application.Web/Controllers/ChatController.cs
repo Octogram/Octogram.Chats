@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Octogram.Chats.Application.Web.Commands.Chats;
+using Octogram.Chats.Application.Web.Queries;
 using Octogram.Chats.Application.Web.Queries.Chats;
-using Octogram.Chats.Application.Web.Queries.Messages;
 using Octogram.Chats.Domain.Members;
 
-namespace Messenger.Web.Controllers
+namespace Octogram.Chats.Application.Web.Controllers
 {
 	[Route("chats")]
 	public class ChatController : ControllerBase
@@ -35,7 +35,7 @@ namespace Messenger.Web.Controllers
 			
 			IEnumerable<Chat> chats = await _chatQueries.GetAsync(account.Id, cancellationToken);
 			
-			return Ok(chats.ToList());
+			return this.Ok(chats.ToList());
 		}
 
 		[HttpGet("{chatId}", Name = "GetChat")]
@@ -49,11 +49,11 @@ namespace Messenger.Web.Controllers
 				chatId,
 				cancellationToken);
 			
-			return Ok(chat);
+			return this.Ok(chat);
 		}
 
 		[HttpGet("{chatId}/messages", Name = "GetChatMessages")]
-		[ProducesResponseType(statusCode: 200, type: typeof(List<Message>))]
+		[ProducesResponseType(statusCode: 200, type: typeof(PagedList<ChatMessage>))]
 		public async Task<IActionResult> Get(
 			[FromRoute] Guid chatId,
 			[FromQuery] int? page,
@@ -65,14 +65,14 @@ namespace Messenger.Web.Controllers
 			
 			Account account = await _accountService.GetCurrentAsync(cancellationToken);
 
-			IEnumerable<ChatMessage> messages = await _chatQueries.GetMessagesAsync(
+			PagedList<ChatMessage> messages = await _chatQueries.GetMessagesAsync(
 				account.Id,
 				chatId,
 				pageValue,
 				pageSize,
 				cancellationToken);
 
-			return Ok(messages);
+			return this.Ok(messages);
 		}
 
 		[HttpPost(Name = "PostChat")]
@@ -80,7 +80,7 @@ namespace Messenger.Web.Controllers
 		{
 			await _mediator.Send(command, cancellationToken);
 
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpPut(Name = "PutChat")]
@@ -88,7 +88,7 @@ namespace Messenger.Web.Controllers
 		{
 			await _mediator.Send(command, cancellationToken);
 
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpDelete("{chatId}", Name = "DeleteChat")]
@@ -101,7 +101,7 @@ namespace Messenger.Web.Controllers
 
 			await _mediator.Send(command, cancellationToken);
 
-			return Ok();
+			return this.Ok();
 		}
 	}
 }

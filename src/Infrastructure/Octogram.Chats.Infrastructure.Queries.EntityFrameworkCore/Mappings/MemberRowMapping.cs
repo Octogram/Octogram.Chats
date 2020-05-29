@@ -4,7 +4,7 @@ using Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Rows;
 
 namespace Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Mappings
 {
-	public class MemberTableMapping : IEntityTypeConfiguration<MemberRow>
+	public class MemberRowMapping : IEntityTypeConfiguration<MemberRow>
 	{
 		/// <inheritdoc />
 		public void Configure(EntityTypeBuilder<MemberRow> builder)
@@ -14,7 +14,7 @@ namespace Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Mappings
 			builder.HasKey(p => p.Id);
 
 			builder.Property(p => p.Id)
-				.HasColumnName("Id");
+				.ValueGeneratedNever();
 		}
 	}
 }

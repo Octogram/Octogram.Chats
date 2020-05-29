@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace Messenger.Web
+namespace Octogram.Chats.Application.Web
 {
 	public class Program
 	{

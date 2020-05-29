@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Octogram.Chats.Application.Web.Queries;
 using Octogram.Chats.Application.Web.Queries.Chats;
 using Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore;
 
@@ -57,19 +58,17 @@ namespace Octogram.Chats.Infrastructure.Queries.Chats
 		}
 
 		/// <inheritdoc />
-		public async Task<IEnumerable<ChatMessage>> GetMessagesAsync(
+		public async Task<PagedList<ChatMessage>> GetMessagesAsync(
 			Guid accountId,
 			Guid chatId,
 			int page,
 			int size,
 			CancellationToken cancellationToken)
 		{
-			List<ChatMessage> messages = await _queriesDbContext
+			PagedList<ChatMessage> messages = await _queriesDbContext
 				.Messages
 				.OrderByDescending(m => m.SentDate)
 				.Where(m => m.Chat.Id == chatId)
-				.Skip((page - 1) * size)
-				.Take(page)
 				.Select(m => new ChatMessage
 				{
 					Id = m.Id,
@@ -77,7 +76,7 @@ namespace Octogram.Chats.Infrastructure.Queries.Chats
 					State = m.State,
 					SentDate = m.SentDate
 				})
-				.ToListAsync(cancellationToken);
+				.ToPagedListAsync(page, size, cancellationToken);
 
 			return messages;
 		}

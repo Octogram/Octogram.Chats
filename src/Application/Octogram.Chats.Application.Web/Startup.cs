@@ -3,22 +3,24 @@ using System.IO;
 using System.Reflection;
 using MassTransit;
 using MediatR;
-using Messenger.Web.Behaviors;
-using Messenger.Web.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Octogram.Chats.Application.Web.Behaviors;
+using Octogram.Chats.Application.Web.Commands;
 using Octogram.Chats.Application.Web.Commands.Chats;
 using Octogram.Chats.Application.Web.Services;
+using Octogram.Chats.Application.Web.Settings;
 using Octogram.Chats.Domain.Members;
+using Octogram.Chats.Infrastructure.CommandsBus.MassTransit;
 using Octogram.Chats.Infrastructure.IoC.Queries;
 using Octogram.Chats.Infrastructure.IoC.Repositories;
 using Octogram.Contracts.Commands;
 
-namespace Messenger.Web
+namespace Octogram.Chats.Application.Web
 {
 	public class Startup
 	{
@@ -54,25 +56,28 @@ namespace Messenger.Web
 				{
 					configure.Host(host);
 					
-					configure.ReceiveEndpoint("Octogram.Chats.Application.Web", endpoint =>
+					configure.ReceiveEndpoint("Octogram.Chats", endpoint =>
 					{
 					});
 				}));
 				
-				var sagaUri = new Uri(host, "/Messenger.Saga");
+				var sagaUri = new Uri(host, "/Octogram.Saga");
 				EndpointConvention.Map<IMessageSendCommand>(sagaUri);
 			});
 			
 			var databaseSettings = new DatabaseSettings();
 			_configuration.Bind("DatabaseSettings", databaseSettings);
-
+			
 			services.AddDatabaseRepositories(databaseSettings);
 			services.AddDatabaseQueries(databaseSettings);
 
-			services.AddSingleton<IAccountService, FakeAccountService>();
+			services.AddHttpContextAccessor();
+			services.AddSingleton<IAccountService, HttpContextAccountService>();
 
 			services.AddMediatR(typeof(CreateChatCommand));
 			services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
+
+			services.AddSingleton<ICommandsBus, MassTransitCommandsBus>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -87,7 +92,7 @@ namespace Messenger.Web
 			{
 				options.SwaggerEndpoint(
 					url: "/swagger/v1/swagger.json",
-					name: "Messenger API v1");
+					name: "Octogram API v1");
 				options.RoutePrefix = "docs";
 			});
 			
@@ -106,7 +111,7 @@ namespace Messenger.Web
 			{
 				options.SwaggerDoc("v1", new OpenApiInfo
 				{
-					Title = "Messenger API",
+					Title = "Octogram API",
 					Version = "v1"
 				});
 

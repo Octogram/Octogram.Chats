@@ -5,11 +5,14 @@ namespace Messenger.Domain.Messages
 {
 	public class Message
 	{
-		protected Message() { }
-		
-		public Message(Guid id, DateTimeOffset sentDate, Chat chat, string content)
+		protected Message()
 		{
-			Id = id;
+			Id = default;
+		}
+		
+		public Message(DateTimeOffset sentDate, Chat chat, string content)
+			: this()
+		{
 			SentDate = sentDate;
 			Chat = chat;
 			Content = content;
