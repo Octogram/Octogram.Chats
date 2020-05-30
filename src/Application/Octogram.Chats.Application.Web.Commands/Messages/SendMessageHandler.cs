@@ -29,7 +29,6 @@ namespace Octogram.Chats.Application.Web.Commands.Messages
 				cancellationToken);
 			
 			var message = new Message(DateTimeOffset.UtcNow, chat, request.Content);
-
 			await _dbContext.Messages.AddAsync(message, cancellationToken);
 			
 			_commandsBus.Enqueue<IMessageSendCommand>(new

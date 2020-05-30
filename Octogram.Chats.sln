@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4118363B-5E25-4302-8347-7B1A01537745}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{213CF526-CBCA-4DDA-B826-A41575A16D94}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{213CF526-CBCA-4DDA-B826-A41575A16D94}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{7162EAEB-1718-406E-85A3-A68850AE9046}"
 EndProject
@@ -42,7 +42,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{12C2128E-794B-4922-B229-9A6CD7F1766B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Application.Web.IntegrationTests", "test\Octogram.Chats.Application.Web.IntegrationTests\Octogram.Chats.Application.Web.IntegrationTests.csproj", "{5F6D5640-9417-4147-90E6-3F054EA75C1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Application.Web.IntegrationTests", "tests\Octogram.Chats.Application.Web.IntegrationTests\Octogram.Chats.Application.Web.IntegrationTests.csproj", "{5F6D5640-9417-4147-90E6-3F054EA75C1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Infrastructure.Queries.Abstractions", "src\Infrastructure\Octogram.Chats.Infrastructure.Queries.Abstractions\Octogram.Chats.Infrastructure.Queries.Abstractions.csproj", "{3592FD63-1101-48C8-8626-4BD0D439F861}"
 EndProject
