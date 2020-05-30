@@ -22,21 +22,13 @@ git:
 
 jobs:
   include:
-    - stage: debug_compile
-      script: ./build.sh compile --configuration Debug
-    - stage: debug_test
-      script: ./build.sh test --configuration Debug
-    - stage: compile
+    - stage: debug_build
+      script: ./build.sh compile+test --configuration Debug
+    - stage: build
       script: ./build.sh compile --configuration Release
-    - stage: test
-      script: ./build.sh test --configuration Release
 
 stages:
-  - name: debug_compile
+  - name: debug_build
     if: branch != master
-  - name: debug_test
-    if: branch != master
-  - name: compile
-    if: branch = master
-  - name: test
+  - name: build
     if: branch = master
