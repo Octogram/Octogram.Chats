@@ -90,12 +90,10 @@ namespace Octogram.Chats.Application.Web
 			
 			services.Configure<CookiePolicyOptions>(options =>
 			{
-				// This lambda determines whether user consent for non-essential cookies is needed for a given request.
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
-			// Add Cookie settings
 			services.AddAuthentication(options =>
 			{
 				options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -108,16 +106,15 @@ namespace Octogram.Chats.Application.Web
 				options.LogoutPath = "/account/logout";
 				options.SlidingExpiration = true;
 			})
-			// Add GitHub authentication
 			.AddGitHub("Github", options =>
 			{
-				options.ClientId = _configuration["GitHub:OAuth:ClientId"]; // client id from registering github app
-				options.ClientSecret = _configuration["GitHub:OAuth:ClientSecret"]; // client secret from registering github app
-				options.Scope.Add("user:email"); // add additional scope to obtain email address
+				options.ClientId = _configuration["GitHub:OAuth:ClientId"];
+				options.ClientSecret = _configuration["GitHub:OAuth:ClientSecret"];
+				options.Scope.Add("user:email");
 				options.Events = new OAuthEvents
 				{
 					OnCreatingTicket = OnCreatingGitHubTicket()
-				}; // Event to capture when the authentication ticket is being created
+				};
 			});
 		}
 
