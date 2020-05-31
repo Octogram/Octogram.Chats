@@ -10,16 +10,16 @@ namespace Messenger.Domain.Chats
 		{
 		}
 		
-		protected Chat(string name, DateTimeOffset createDate, Member owned)
+		protected Chat(string name, DateTimeOffset createDate, Account owner)
 		{
 			Name = name;
 			CreateDate = createDate;
-			Owned = owned;
+			Owner = owner;
 		}
 
 		public string Name { get; protected set; }
 
-		public virtual Member Owned { get; private set; }
+		public virtual Account Owner { get; private set; }
 
 		public DateTimeOffset CreateDate { get; private set; }
 	}

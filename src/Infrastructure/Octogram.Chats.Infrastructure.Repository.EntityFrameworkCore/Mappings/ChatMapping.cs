@@ -23,9 +23,9 @@ namespace Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore.Mappings
 				.HasColumnType("timestamptz")
 				.HasColumnName("CreateDate");
 
-			builder.HasOne(p => p.Owned)
+			builder.HasOne(p => p.Owner)
 				.WithOne()
-				.HasForeignKey<Chat>("OwnedId");
+				.HasForeignKey<Chat>("OwnerId");
 		}
 	}
 }

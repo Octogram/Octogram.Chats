@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
@@ -9,9 +10,10 @@ using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
 namespace Octogram.Chats.Infrastructure.Migrations.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    partial class RepositoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200531131801_ChangeOwnerIdColumn2")]
+    partial class ChangeOwnerIdColumn2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

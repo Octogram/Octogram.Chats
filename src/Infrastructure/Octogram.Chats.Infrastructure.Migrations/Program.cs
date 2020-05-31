@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Octogram.Chats.Infrastructure.Migrations.Settings;
 using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
 using Serilog;
@@ -36,6 +37,13 @@ namespace Octogram.Chats.Infrastructure.Migrations
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 			Host.CreateDefaultBuilder(args)
+				.ConfigureAppConfiguration((hostContext, builder) =>
+				{
+					if (hostContext.HostingEnvironment.IsDevelopment())
+					{
+						builder.AddUserSecrets<Program>();
+					}
+				})
 				.UseSerilog()
 				.ConfigureServices((hostContext, services) =>
 				{

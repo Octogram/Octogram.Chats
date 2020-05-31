@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Messenger.Domain.Chats;
 using Microsoft.EntityFrameworkCore;
+using Octogram.Chats.Domain.Abstractions.Exceptions;
 using Octogram.Chats.Domain.Members;
 using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
 
@@ -30,8 +31,13 @@ namespace Octogram.Chats.Application.Web.Commands.Chats
 				.Chats
 				.OfType<DirectChat>()
 				.FirstOrDefaultAsync(
-					ch => ch.Id == request.ChatId && ch.Owned.Id == account.Id,
+					ch => ch.Id == request.ChatId && ch.Owner.Id == account.Id,
 					cancellationToken);
+
+			if (chat is null)
+			{
+				throw new EntityNotFoundException(typeof(Chat), $"Chat with id {request.ChatId} not found.");
+			}
 			
 			chat.SetChatName(request.Name);
 			

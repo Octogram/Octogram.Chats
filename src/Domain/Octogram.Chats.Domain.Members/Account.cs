@@ -3,58 +3,27 @@ using Octogram.Chats.Domain.Abstractions;
 
 namespace Octogram.Chats.Domain.Members
 {
-	public class Account : Entity<Guid>, IEquatable<Account>
+	public class Account : Entity<Guid>
 	{
 		protected Account()
 		{
 		}
 		
-		public Account(Guid id)
-			: base(id)
+		public Account(string username, string usernameId, string name, string email)
+			: this()
 		{
+			Username = username;
+			UsernameId = usernameId;
+			Name = name;
+			Email = email;
 		}
 
-		/// <inheritdoc />
-		public bool Equals(Account other)
-		{
-			return Id == other?.Id;
-		}
+		public string Username { get; private set; }
+		
+		public string UsernameId { get; private set; }
 
-		/// <inheritdoc />
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj))
-			{
-				return false;
-			}
+		public string Name { get; private set; }
 
-			if (ReferenceEquals(this, obj))
-			{
-				return true;
-			}
-
-			if (obj.GetType() != this.GetType())
-			{
-				return false;
-			}
-
-			return Equals((Account)obj);
-		}
-
-		/// <inheritdoc />
-		public override int GetHashCode()
-		{
-			return HashCode.Combine(Id);
-		}
-
-		public static bool operator ==(Account left, Account right)
-		{
-			return Equals(left, right);
-		}
-
-		public static bool operator !=(Account left, Account right)
-		{
-			return !Equals(left, right);
-		}
+		public string Email { get; private set; }
 	}
 }

@@ -25,12 +25,15 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 		public async Task Can_send_message_to_direct_chat()
 		{
 			// Arrange
-			Account account = await AccountService.GetCurrentAsync(CancellationToken);
-			var owned = new Member(account.Id);
-			var member = new Member(Guid.Parse("03C2781A-6CB1-4E27-8AF7-725FB5159244"));
+			Account owner = await AccountService.GetCurrentAsync(CancellationToken);
+			var member = new Account(
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString());
 			var directChat = new DirectChat(
 				createDate: DateTimeOffset.Now,
-				owned: owned,
+				owner: owner,
 				member: member);
 
 			string content = Guid.NewGuid().ToString();
@@ -58,15 +61,44 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 		}
 		
 		[Test]
+		public async Task Cannot_send_message_direct_chat_not_found()
+		{
+			// Arrange
+			var notFoundChatId = Guid.NewGuid();
+			var member = new Account(
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString());
+			string content = Guid.NewGuid().ToString();
+			
+			// Act
+			var command = new SendMessageCommand
+			{
+				ChatId = notFoundChatId,
+				MemberId = member.Id,
+				Content = content
+			};
+			StringContent payload = command.ToJsonContent();
+			HttpResponseMessage response = await HttpClient.PostAsync("messages", payload, CancellationToken);
+			
+			// Assert
+			response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
+		}
+		
+		[Test]
 		public async Task Can_edit_message()
 		{
 			// Arrange
-			Account account = await AccountService.GetCurrentAsync(CancellationToken);
-			var owned = new Member(account.Id);
-			var member = new Member(Guid.Parse("03C2781A-6CB1-4E27-8AF7-725FB5159244"));
+			Account owner = await AccountService.GetCurrentAsync(CancellationToken);
+			var member = new Account(
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString());
 			var directChat = new DirectChat(
 				createDate: DateTimeOffset.Now,
-				owned: owned,
+				owner: owner,
 				member: member);
 
 			string existedContent = Guid.NewGuid().ToString();
@@ -96,41 +128,20 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 		}
 		
 		[Test]
-		public async Task Can_edit_message_but_not_found()
+		public async Task Cannot_edit_message_not_found()
 		{
-			// Arrange
-			Account account = await AccountService.GetCurrentAsync(CancellationToken);
-			var owned = new Member(account.Id);
-			var member = new Member(Guid.Parse("03C2781A-6CB1-4E27-8AF7-725FB5159244"));
-			var directChat = new DirectChat(
-				createDate: DateTimeOffset.Now,
-				owned: owned,
-				member: member);
-
-			string existedContent = Guid.NewGuid().ToString();
-			var existedMessage = new Message(DateTimeOffset.UtcNow, directChat, existedContent);
-
-			await RepositoryContext.Chats.AddAsync(directChat, CancellationToken);
-			await RepositoryContext.Messages.AddAsync(existedMessage, CancellationToken);
-			await RepositoryContext.SaveChangesAsync(CancellationToken);
-			
 			// Act
 			string newContent = Guid.NewGuid().ToString();
 			var command = new EditMessageCommand
 			{
 				Content = newContent,
-				MessageId = existedMessage.Id
+				MessageId = Guid.NewGuid()
 			};
 			StringContent payload = command.ToJsonContent();
 			HttpResponseMessage response = await HttpClient.PutAsync("messages", payload, CancellationToken);
 			
 			// Assert
-			response.StatusCode.ShouldBe(HttpStatusCode.OK);
-			MessageRow message = await QueriesContext
-				.Messages
-				.FirstOrDefaultAsync(m => m.Id == existedMessage.Id);
-			message.ShouldNotBeNull();
-			message.Content.ShouldBe(newContent);
+			response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
@@ -9,9 +10,10 @@ using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
 namespace Octogram.Chats.Infrastructure.Migrations.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    partial class RepositoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200531103652_AddChatName")]
+    partial class AddChatName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace Octogram.Chats.Infrastructure.Migrations.Migrations
                         .HasColumnName("Name")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("OwnerId")
+                    b.Property<Guid?>("OwnedId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Type")
@@ -42,7 +44,7 @@ namespace Octogram.Chats.Infrastructure.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId")
+                    b.HasIndex("OwnedId")
                         .IsUnique();
 
                     b.ToTable("Chats");
@@ -82,35 +84,14 @@ namespace Octogram.Chats.Infrastructure.Migrations.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("Octogram.Chats.Domain.Members.Account", b =>
+            modelBuilder.Entity("Octogram.Chats.Domain.Members.Member", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<string>("Email")
-                        .HasColumnName("Email")
-                        .HasColumnType("character varying(320)")
-                        .HasMaxLength(320);
-
-                    b.Property<string>("Name")
-                        .HasColumnName("Name")
-                        .HasColumnType("character varying(500)")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("Username")
-                        .HasColumnName("Username")
-                        .HasColumnType("character varying(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("UsernameId")
-                        .HasColumnName("UsernameId")
-                        .HasColumnType("character varying(64)")
-                        .HasMaxLength(64);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("Messenger.Domain.Chats.DirectChat", b =>
@@ -128,9 +109,9 @@ namespace Octogram.Chats.Infrastructure.Migrations.Migrations
 
             modelBuilder.Entity("Messenger.Domain.Chats.Chat", b =>
                 {
-                    b.HasOne("Octogram.Chats.Domain.Members.Account", "Owner")
+                    b.HasOne("Octogram.Chats.Domain.Members.Member", "Owned")
                         .WithOne()
-                        .HasForeignKey("Messenger.Domain.Chats.Chat", "OwnerId");
+                        .HasForeignKey("Messenger.Domain.Chats.Chat", "OwnedId");
                 });
 
             modelBuilder.Entity("Messenger.Domain.Messages.Message", b =>
@@ -142,7 +123,7 @@ namespace Octogram.Chats.Infrastructure.Migrations.Migrations
 
             modelBuilder.Entity("Messenger.Domain.Chats.DirectChat", b =>
                 {
-                    b.HasOne("Octogram.Chats.Domain.Members.Account", "Member")
+                    b.HasOne("Octogram.Chats.Domain.Members.Member", "Member")
                         .WithOne()
                         .HasForeignKey("Messenger.Domain.Chats.DirectChat", "MemberId");
                 });

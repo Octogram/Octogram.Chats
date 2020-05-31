@@ -15,6 +15,11 @@ namespace Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore
 	public class RepositoryDbContext : DbContext
 	{
 		/// <inheritdoc />
+		public RepositoryDbContext()
+		{
+		}
+
+		/// <inheritdoc />
 		public RepositoryDbContext(DbContextOptions<RepositoryDbContext> options)
 			: base(options)
 		{
@@ -24,7 +29,7 @@ namespace Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore
 		
 		public DbSet<Chat> Chats { get; set; }
 		
-		public DbSet<Member> Interlocutors { get; set; }
+		public DbSet<Account> Accounts { get; set; }
 
 		/// <inheritdoc />
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,7 +37,7 @@ namespace Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore
 			modelBuilder.ApplyConfiguration(new MessageMapping());
 			modelBuilder.ApplyConfiguration(new ChatMapping());
 			modelBuilder.ApplyConfiguration(new DirectChatMapping());
-			modelBuilder.ApplyConfiguration(new MemberMapping());
+			modelBuilder.ApplyConfiguration(new AccountMapping());
 			
 			if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
 			{

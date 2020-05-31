@@ -28,12 +28,16 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 		public async Task Can_has_chats()
 		{
 			// Arrange
-			Account account = await AccountService.GetCurrentAsync(CancellationToken);
-			var owned = new Member(account.Id);
-			var member = new Member(Guid.Parse("03C2781A-6CB1-4E27-8AF7-725FB5159244"));
+			Account owner = await AccountService.GetCurrentAsync(CancellationToken);
+			var member = new Account(
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString());
+			
 			var directChat = new DirectChat(
 				createDate: DateTimeOffset.Now,
-				owned: owned,
+				owner: owner,
 				member: member);
 			
 			await RepositoryContext.Chats.AddAsync(directChat);
@@ -68,12 +72,15 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 		public async Task Can_get_chat_by_id()
 		{
 			// Arrange
-			Account account = await AccountService.GetCurrentAsync(CancellationToken);
-			var owned = new Member(account.Id);
-			var member = new Member(Guid.Parse("5EB72EE7-30FC-40D3-8852-B33B87A9F744"));
+			Account owner = await AccountService.GetCurrentAsync(CancellationToken);
+			var member = new Account(
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString());
 			var directChat = new DirectChat(
 				createDate: DateTimeOffset.Now,
-				owned: owned,
+				owner: owner,
 				member: member);
 			
 			await RepositoryContext.Chats.AddAsync(directChat);
@@ -107,12 +114,15 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 		public async Task Can_get_chat_messages()
 		{
 			// Arrange
-			Account account = await AccountService.GetCurrentAsync(CancellationToken);
-			var owned = new Member(account.Id);
-			var member = new Member(Guid.Parse("5EB72EE7-30FC-40D3-8852-B33B87A9F744"));
+			Account owner = await AccountService.GetCurrentAsync(CancellationToken);
+			var member = new Account(
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString());
 			var directChat = new DirectChat(
 				createDate: DateTimeOffset.Now,
-				owned: owned,
+				owner: owner,
 				member: member);
 			var messages = new[]
 			{
@@ -148,14 +158,21 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 		public async Task Can_create_chat()
 		{
 			// Arrange
-			var command = new CreateChatCommand
+			var member = new Account(
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString());
+			await RepositoryContext.Accounts.AddAsync(member);
+			await RepositoryContext.SaveChangesAsync(CancellationToken);
+
+			// Act
+			var command = new CreateDirectChatCommand
 			{
-				To = Guid.Parse("97BB3F28-D6FC-475D-A422-63B58DA1FB3F"),
-				Type = "Direct"
+				To = member.Id
 			};
 			string chatName = command.To.ToString();
 
-			// Act
 			StringContent payload = command.ToJsonContent();
 			HttpResponseMessage response = await HttpClient.PostAsync("chats", payload, CancellationToken);
 
@@ -171,12 +188,18 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 		public async Task Can_change_chat_name()
 		{
 			// Arrange
-			Account account = await AccountService.GetCurrentAsync(CancellationToken);
-			var owned = new Member(account.Id);
-			var member = new Member(Guid.NewGuid());
-			var chat = new DirectChat(DateTimeOffset.Now, owned, member);
+			Account owner = await AccountService.GetCurrentAsync(CancellationToken);
+			var member = new Account(
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString(),
+				Guid.NewGuid().ToString());
+			var directChat = new DirectChat(
+				createDate: DateTimeOffset.Now,
+				owner: owner,
+				member: member);
 			
-			await RepositoryContext.Chats.AddAsync(chat, CancellationToken);
+			await RepositoryContext.Chats.AddAsync(directChat, CancellationToken);
 			await RepositoryContext.SaveChangesAsync(CancellationToken);
 
 			// Act
@@ -184,7 +207,7 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 			var command = new ChangeChatInfoCommand
 			{
 				Name = newChatName,
-				ChatId = chat.Id
+				ChatId = directChat.Id
 			};
 			StringContent payload = command.ToJsonContent();
 			HttpResponseMessage response = await HttpClient.PutAsync("chats", payload, CancellationToken);
@@ -194,6 +217,26 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 			ChatRow expected = QueriesContext.Chats.FirstOrDefault(ch => ch.Name == newChatName);
 			expected.ShouldNotBeNull();
 			expected.Name.ShouldBe(newChatName);
+		}
+		
+		[Test]
+		public async Task Can_change_chat_name_but_chat_not_found()
+		{
+			// Arrange
+			var notFoundChatId = Guid.NewGuid();
+			
+			// Act
+			string newChatName = Guid.NewGuid().ToString();
+			var command = new ChangeChatInfoCommand
+			{
+				Name = newChatName,
+				ChatId = notFoundChatId
+			};
+			StringContent payload = command.ToJsonContent();
+			HttpResponseMessage response = await HttpClient.PutAsync("chats", payload, CancellationToken);
+
+			// Assert
+			response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
 		}
 	}
 }

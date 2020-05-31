@@ -28,7 +28,7 @@ namespace Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.ApplyConfiguration(new ChatRowMapping());
-			modelBuilder.ApplyConfiguration(new MemberRowMapping());
+			modelBuilder.ApplyConfiguration(new AccountRowMapping());
 			modelBuilder.ApplyConfiguration(new MessageRowMapping());
 			
 			if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")

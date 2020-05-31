@@ -76,7 +76,7 @@ namespace Octogram.Chats.Application.Web.Controllers
 		}
 
 		[HttpPost(Name = "PostChat")]
-		public async Task<IActionResult> Post([FromBody] CreateChatCommand command, CancellationToken cancellationToken)
+		public async Task<IActionResult> Post([FromBody] CreateDirectChatCommand command, CancellationToken cancellationToken)
 		{
 			await _mediator.Send(command, cancellationToken);
 

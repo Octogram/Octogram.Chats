@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
@@ -9,9 +10,10 @@ using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
 namespace Octogram.Chats.Infrastructure.Migrations.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    partial class RepositoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200531131622_ChangeOwnerIdColumn")]
+    partial class ChangeOwnerIdColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace Octogram.Chats.Infrastructure.Migrations.Migrations
                         .HasColumnName("Name")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("OwnerId")
+                    b.Property<Guid?>("OwnedId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Type")
@@ -42,7 +44,7 @@ namespace Octogram.Chats.Infrastructure.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId")
+                    b.HasIndex("OwnedId")
                         .IsUnique();
 
                     b.ToTable("Chats");
@@ -130,7 +132,7 @@ namespace Octogram.Chats.Infrastructure.Migrations.Migrations
                 {
                     b.HasOne("Octogram.Chats.Domain.Members.Account", "Owner")
                         .WithOne()
-                        .HasForeignKey("Messenger.Domain.Chats.Chat", "OwnerId");
+                        .HasForeignKey("Messenger.Domain.Chats.Chat", "OwnedId");
                 });
 
             modelBuilder.Entity("Messenger.Domain.Messages.Message", b =>

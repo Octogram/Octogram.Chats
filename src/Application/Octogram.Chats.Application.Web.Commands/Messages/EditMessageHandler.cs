@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Messenger.Domain.Messages;
 using Microsoft.EntityFrameworkCore;
+using Octogram.Chats.Domain.Abstractions.Exceptions;
 using Octogram.Chats.Domain.Members;
 using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
 
@@ -27,11 +28,13 @@ namespace Octogram.Chats.Application.Web.Commands.Messages
 
 			Message existedMessage = await _dbContext
 				.Messages
-				.SingleOrDefaultAsync(m => m.Id == request.MessageId && m.Chat.Owned.Id == account.Id, cancellationToken);
+				.SingleOrDefaultAsync(m => m.Id == request.MessageId && m.Chat.Owner.Id == account.Id, cancellationToken);
 
 			if (existedMessage is null)
 			{
-				throw new InvalidOperationException(message: $"Message with id {request.MessageId} not found");
+				throw new EntityNotFoundException(
+					typeof(Message),
+					message: $"Message with id {request.MessageId} not found");
 			}
 			
 			existedMessage.EditContent(request.Content);

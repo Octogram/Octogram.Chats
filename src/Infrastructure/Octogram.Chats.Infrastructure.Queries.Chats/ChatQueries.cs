@@ -24,7 +24,7 @@ namespace Octogram.Chats.Infrastructure.Queries.Chats
 		{
 			List<Chat> chats = await _queriesDbContext
 				.Chats
-				.Where(ch => ch.Owner.Id == accountId)
+				.Where(ch => ch.OwnerId == accountId)
 				.Select(ch => new Chat
 				{
 					Id = ch.Id,
@@ -43,7 +43,7 @@ namespace Octogram.Chats.Infrastructure.Queries.Chats
 		{
 			ChatDetails chat = await _queriesDbContext
 				.Chats
-				.Where(ch => ch.Owner.Id == accountId && ch.Id == chatId)
+				.Where(ch => ch.OwnerId == accountId && ch.Id == chatId)
 				.Select(ch => new ChatDetails
 				{
 					Id = ch.Id,
@@ -68,7 +68,7 @@ namespace Octogram.Chats.Infrastructure.Queries.Chats
 			PagedList<ChatMessage> messages = await _queriesDbContext
 				.Messages
 				.OrderByDescending(m => m.SentDate)
-				.Where(m => m.Chat.Id == chatId)
+				.Where(m => m.ChatId == chatId)
 				.Select(m => new ChatMessage
 				{
 					Id = m.Id,

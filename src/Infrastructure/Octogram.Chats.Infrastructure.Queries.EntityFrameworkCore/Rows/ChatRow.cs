@@ -6,9 +6,9 @@ namespace Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Rows
 	{
 		public Guid Id { get; set; }
 
-		public Guid OwnedId { get; set; }
+		public Guid OwnerId { get; set; }
 		
-		public MemberRow Owner { get; set; }
+		public AccountRow Owner { get; set; }
 
 		public string Type { get; set; }
 
@@ -16,6 +16,6 @@ namespace Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Rows
 
 		public Guid MemberId { get; set; }
 		
-		public MemberRow Member { get; set; }
+		public AccountRow Member { get; set; }
 	}
 }

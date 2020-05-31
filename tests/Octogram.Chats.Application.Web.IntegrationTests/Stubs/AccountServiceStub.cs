@@ -29,7 +29,7 @@ namespace Octogram.Chats.Application.Web.IntegrationTests.Stubs
 		{
 			/// <inheritdoc />
 			public TestCurrentAccount()
-				: base(Guid.Parse("9BBAE6B2-B9A1-4D15-9F05-66F9FDCB9F29"))
+				: base(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString())
 			{
 			}
 		}

@@ -6,19 +6,19 @@ namespace Messenger.Domain.Chats
 {
 	public class GroupChat : Chat
 	{
-		private readonly IList<Member> _members;
+		private readonly IList<Account> _members;
 
 		protected GroupChat()
 		{
 		}
 		
 		/// <inheritdoc />
-		protected GroupChat(string name,DateTimeOffset createDate, Member owned)
-			: base(name, createDate, owned)
+		protected GroupChat(string name,DateTimeOffset createDate, Account owner)
+			: base(name, createDate, owner)
 		{
 		}
 
-		public GroupChat(string name, DateTimeOffset createDate, Member owner, ICollection<Member> group)
+		public GroupChat(string name, DateTimeOffset createDate, Account owner, ICollection<Account> group)
 			: this(name, createDate, owner)
 		{
 			if (owner == null)
@@ -33,12 +33,12 @@ namespace Messenger.Domain.Chats
 
 			_members.Add(owner);
 			
-			foreach (Member member in group)
+			foreach (Account member in group)
 			{
 				_members.Add(member);
 			}
 		}
 
-		public virtual IEnumerable<Member> Members => _members;
+		public virtual IEnumerable<Account> Members => _members;
 	}
 }

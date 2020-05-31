@@ -9,15 +9,15 @@ namespace Messenger.Domain.Chats
 		{
 		}
 		
-		protected DirectChat(string name, DateTimeOffset createDate, Member owned)
-			: base(name, createDate, owned)
+		protected DirectChat(string name, DateTimeOffset createDate, Account owner)
+			: base(name, createDate, owner)
 		{
 			
 		}
 		
 		/// <inheritdoc />
-		public DirectChat(DateTimeOffset createDate, Member owned, Member member)
-			: this(member.Id.ToString(), createDate, owned)
+		public DirectChat(DateTimeOffset createDate, Account owner, Account member)
+			: this(member.Id.ToString(), createDate, owner)
 		{
 			if (member is null)
 			{
@@ -27,7 +27,7 @@ namespace Messenger.Domain.Chats
 			Member = member;
 		}
 
-		public virtual Member Member { get; private set; }
+		public virtual Account Member { get; private set; }
 
 		public void SetChatName(string name)
 		{

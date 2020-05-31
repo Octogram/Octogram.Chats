@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Domain\Octogram.Chats.Domain.Members\Octogram.Chats.Domain.Members.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore\Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore.csproj" />
     </ItemGroup>
 
     <ItemGroup>
