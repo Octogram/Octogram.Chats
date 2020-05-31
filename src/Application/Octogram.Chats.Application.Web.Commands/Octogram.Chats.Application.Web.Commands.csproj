@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MediatR" Version="8.0.1" />
+        <PackageReference Include="Octogram.Contracts" Version="0.1.0-issue-1-0001.13" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Infrastructure\Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore\Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore.csproj" />
+      <ProjectReference Include="..\Octogram.Chats.Application.Web.Services\Octogram.Chats.Application.Web.Services.csproj" />
+    </ItemGroup>
+</Project>

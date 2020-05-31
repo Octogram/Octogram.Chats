@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Octogram.Chats.Infrastructure.IoC\Octogram.Chats.Infrastructure.IoC.csproj" />
+        <ProjectReference Include="..\Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore\Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.3" />
+    </ItemGroup>
+
+</Project>
