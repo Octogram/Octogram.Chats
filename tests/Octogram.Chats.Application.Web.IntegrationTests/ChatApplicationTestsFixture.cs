@@ -9,12 +9,12 @@ using Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore;
 namespace Octogram.Chats.Application.Web.IntegrationTests
 {
 	[TestFixture]
-	public abstract class ChatTestsFixture
+	public abstract class ChatApplicationTestsFixture
 	{
 		private readonly ChatApplicationWebFactory _factory;
 		private IServiceScope _scope;
 
-		protected ChatTestsFixture()
+		protected ChatApplicationTestsFixture()
 		{
 			_factory = new ChatApplicationWebFactory();
 		}

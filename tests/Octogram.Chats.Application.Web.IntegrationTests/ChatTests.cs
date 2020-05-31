@@ -8,19 +8,21 @@ using System.Threading.Tasks;
 using Messenger.Domain.Chats;
 using Messenger.Domain.Messages;
 using NUnit.Framework;
+using Octogram.Chats.Application.Web.Commands.Chats;
 using Octogram.Chats.Application.Web.IntegrationTests.Extensions;
 using Octogram.Chats.Application.Web.Queries;
 using Octogram.Chats.Application.Web.Queries.Chats;
 using Octogram.Chats.Domain.Members;
+using Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Rows;
 using Shouldly;
 using Chat = Octogram.Chats.Application.Web.Queries.Chats.Chat;
 
 namespace Octogram.Chats.Application.Web.IntegrationTests
 {
 	[Parallelizable]
-	public class ChatTests : ChatTestsFixture
+	public class ChatTests : ChatApplicationTestsFixture
 	{
-		private static readonly CancellationToken CancellationToken = CancellationToken.None; 
+		private static readonly CancellationToken CancellationToken = CancellationToken.None;
 		
 		[Test]
 		public async Task Can_has_chats()
@@ -140,6 +142,58 @@ namespace Octogram.Chats.Application.Web.IntegrationTests
 				.Select(m => m.Id)
 				.SequenceEqual(messages.OrderByDescending(m => m.SentDate).Select(m => m.Id))
 				.ShouldBeTrue();
+		}
+
+		[Test]
+		public async Task Can_create_chat()
+		{
+			// Arrange
+			var command = new CreateChatCommand
+			{
+				To = Guid.Parse("97BB3F28-D6FC-475D-A422-63B58DA1FB3F"),
+				Type = "Direct"
+			};
+			string chatName = command.To.ToString();
+
+			// Act
+			StringContent payload = command.ToJsonContent();
+			HttpResponseMessage response = await HttpClient.PostAsync("chats", payload, CancellationToken);
+
+			// Assert
+			response.StatusCode.ShouldBe(HttpStatusCode.OK);
+			ChatRow expected = QueriesContext.Chats.FirstOrDefault(ch => ch.Name == chatName);
+			expected.ShouldNotBeNull();
+			expected.Name.ShouldBe(chatName);
+			expected.MemberId.ShouldBe(command.To);
+		}
+		
+		[Test]
+		public async Task Can_change_chat_name()
+		{
+			// Arrange
+			Account account = await AccountService.GetCurrentAsync(CancellationToken);
+			var owned = new Member(account.Id);
+			var member = new Member(Guid.NewGuid());
+			var chat = new DirectChat(DateTimeOffset.Now, owned, member);
+			
+			await RepositoryContext.Chats.AddAsync(chat, CancellationToken);
+			await RepositoryContext.SaveChangesAsync(CancellationToken);
+
+			// Act
+			string newChatName = Guid.NewGuid().ToString();
+			var command = new ChangeChatInfoCommand
+			{
+				Name = newChatName,
+				ChatId = chat.Id
+			};
+			StringContent payload = command.ToJsonContent();
+			HttpResponseMessage response = await HttpClient.PutAsync("chats", payload, CancellationToken);
+
+			// Assert
+			response.StatusCode.ShouldBe(HttpStatusCode.OK);
+			ChatRow expected = QueriesContext.Chats.FirstOrDefault(ch => ch.Name == newChatName);
+			expected.ShouldNotBeNull();
+			expected.Name.ShouldBe(newChatName);
 		}
 	}
 }

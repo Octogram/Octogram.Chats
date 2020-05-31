@@ -1,17 +1,16 @@
 ﻿using System;
 using Messenger.Domain.Chats;
+using Octogram.Chats.Domain.Abstractions;
 
 namespace Messenger.Domain.Messages
 {
-	public class Message
+	public class Message : Entity<Guid>
 	{
 		protected Message()
 		{
-			Id = default;
 		}
 		
 		public Message(DateTimeOffset sentDate, Chat chat, string content)
-			: this()
 		{
 			SentDate = sentDate;
 			Chat = chat;
@@ -20,8 +19,6 @@ namespace Messenger.Domain.Messages
 			State = MessageState.Sending;
 		}
 
-		public Guid Id { get; private set; }
-		
 		public DateTimeOffset SentDate { get; private set; }
 		
 		public virtual Chat Chat { get; private set; }
@@ -29,12 +26,10 @@ namespace Messenger.Domain.Messages
 		public MessageState State { get; private set; }
 		
 		public string Content { get; private set; }
-	}
 
-	public enum MessageState
-	{
-		Sending,
-		Sent,
-		Read
+		public void EditContent(string content)
+		{
+			Content = content;
+		}
 	}
 }

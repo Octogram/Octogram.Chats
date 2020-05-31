@@ -36,7 +36,7 @@ namespace Octogram.Chats.Application.Web.Commands.Chats
 			switch (request.Type)
 			{
 				case "Direct":
-					var member = new Member(Guid.Parse("26094138-D7E4-49C3-B970-217A734F1904"));
+					var member = new Member(request.To);
 					var owned = new Member(account.Id);
 					var chat = new DirectChat(DateTimeOffset.UtcNow, owned, member);
 

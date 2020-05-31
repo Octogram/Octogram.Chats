@@ -25,10 +25,6 @@ namespace Octogram.Chats.Application.Web.Controllers
 		[HttpPost(Name = "PostMessage")]
 		public async Task<IActionResult> Post([FromBody] SendMessageCommand command, CancellationToken cancellationToken)
 		{
-			Account account = await _accountService.GetCurrentAsync(cancellationToken);
-
-			command.AccountId = account.Id;
-			
 			await _mediator.Send(command, cancellationToken);
 
 			return this.Ok();

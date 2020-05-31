@@ -16,6 +16,9 @@ namespace Octogram.Chats.Infrastructure.Repository.EntityFrameworkCore.Mappings
 			builder.HasDiscriminator<string>("Type")
 				.HasValue<DirectChat>(nameof(DirectChat));
 
+			builder.Property(p => p.Name)
+				.HasColumnName("Name");
+			
 			builder.Property(p => p.CreateDate)
 				.HasColumnType("timestamptz")
 				.HasColumnName("CreateDate");

@@ -12,6 +12,8 @@ namespace Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Rows
 
 		public string Type { get; set; }
 
+		public string Name { get; set; }
+
 		public Guid MemberId { get; set; }
 		
 		public MemberRow Member { get; set; }

@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Infrastructure.CommandsBus.MassTransit", "src\Infrastructure\Octogram.Chats.Infrastructure.CommandsBus.MassTransit\Octogram.Chats.Infrastructure.CommandsBus.MassTransit.csproj", "{BCCEC74F-78D5-4EBA-A60B-98D6EC824310}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octogram.Chats.Domain.Abstractions", "src\Domain\Octogram.Chats.Domain.Abstractions\Octogram.Chats.Domain.Abstractions.csproj", "{0FEE21E8-1FE2-4232-9265-972FDABFCA5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,6 +130,10 @@ Global
 		{BCCEC74F-78D5-4EBA-A60B-98D6EC824310}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCCEC74F-78D5-4EBA-A60B-98D6EC824310}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCCEC74F-78D5-4EBA-A60B-98D6EC824310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FEE21E8-1FE2-4232-9265-972FDABFCA5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FEE21E8-1FE2-4232-9265-972FDABFCA5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FEE21E8-1FE2-4232-9265-972FDABFCA5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FEE21E8-1FE2-4232-9265-972FDABFCA5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7162EAEB-1718-406E-85A3-A68850AE9046} = {4118363B-5E25-4302-8347-7B1A01537745}
@@ -151,5 +157,6 @@ Global
 		{5F6D5640-9417-4147-90E6-3F054EA75C1D} = {213CF526-CBCA-4DDA-B826-A41575A16D94}
 		{3592FD63-1101-48C8-8626-4BD0D439F861} = {AC6A16DC-B3CD-4F8E-B038-ED355EB51296}
 		{BCCEC74F-78D5-4EBA-A60B-98D6EC824310} = {AC6A16DC-B3CD-4F8E-B038-ED355EB51296}
+		{0FEE21E8-1FE2-4232-9265-972FDABFCA5E} = {3299A72F-41B2-4141-BF59-E3E643930849}
 	EndGlobalSection
 EndGlobal

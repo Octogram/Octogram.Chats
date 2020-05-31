@@ -1,22 +1,23 @@
 ﻿using System;
+using Octogram.Chats.Domain.Abstractions;
 using Octogram.Chats.Domain.Members;
 
 namespace Messenger.Domain.Chats
 {
-	public abstract class Chat
+	public abstract class Chat : Entity<Guid>
 	{
-		private Chat()
+		protected Chat()
 		{
 		}
 		
-		protected Chat(Guid id, DateTimeOffset createDate, Member owned)
+		protected Chat(string name, DateTimeOffset createDate, Member owned)
 		{
-			Id = id;
+			Name = name;
 			CreateDate = createDate;
 			Owned = owned;
 		}
 
-		public Guid Id { get; private set; }
+		public string Name { get; protected set; }
 
 		public virtual Member Owned { get; private set; }
 

@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Octogram.Chats.Domain.Abstractions\Octogram.Chats.Domain.Abstractions.csproj" />
       <ProjectReference Include="..\Octogram.Chats.Domain.Members\Octogram.Chats.Domain.Members.csproj" />
     </ItemGroup>
 

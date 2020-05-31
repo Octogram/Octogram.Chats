@@ -16,6 +16,9 @@ namespace Octogram.Chats.Infrastructure.Queries.EntityFrameworkCore.Mappings
 			builder.Property(p => p.Type)
 				.HasColumnName("Type");
 
+			builder.Property(p => p.Name)
+				.HasColumnName("Name");
+
 			builder.HasOne(p => p.Owner)
 				.WithOne()
 				.HasForeignKey<ChatRow>(p => p.OwnedId);

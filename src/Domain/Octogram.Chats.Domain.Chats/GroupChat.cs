@@ -8,20 +8,18 @@ namespace Messenger.Domain.Chats
 	{
 		private readonly IList<Member> _members;
 
-		/// <inheritdoc />
-		protected GroupChat(DateTimeOffset createDate, Member owned)
-			: base(default, createDate, owned)
-		{
-		}
-
-		/// <inheritdoc />
 		protected GroupChat()
-			: this(default, default)
+		{
+		}
+		
+		/// <inheritdoc />
+		protected GroupChat(string name,DateTimeOffset createDate, Member owned)
+			: base(name, createDate, owned)
 		{
 		}
 
-		public GroupChat(DateTimeOffset createDate, Member owner, ICollection<Member> group)
-			: this(createDate, owner)
+		public GroupChat(string name, DateTimeOffset createDate, Member owner, ICollection<Member> group)
+			: this(name, createDate, owner)
 		{
 			if (owner == null)
 			{

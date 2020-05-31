@@ -4,4 +4,8 @@
         <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Octogram.Chats.Domain.Abstractions\Octogram.Chats.Domain.Abstractions.csproj" />
+    </ItemGroup>
+
 </Project>

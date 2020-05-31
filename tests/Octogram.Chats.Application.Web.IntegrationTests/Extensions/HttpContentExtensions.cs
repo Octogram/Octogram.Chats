@@ -1,10 +1,11 @@
 ﻿using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Octogram.Chats.Application.Web.IntegrationTests.Extensions
 {
-	internal static class HttpResponseExtensions
+	internal static class HttpContentExtensions
 	{
 		public static async Task<T> Content<T>(this HttpResponseMessage responseMessage)
 		{
@@ -16,6 +17,12 @@ namespace Octogram.Chats.Application.Web.IntegrationTests.Extensions
 		{
 			string stringContent = await content.ReadAsStringAsync();
 			return JsonConvert.DeserializeObject<T>(stringContent);
+		}
+
+		public static StringContent ToJsonContent(this object obj)
+		{
+			string content = JsonConvert.SerializeObject(obj);
+			return new StringContent(content, Encoding.UTF8, "application/json");
 		}
 	}
 }

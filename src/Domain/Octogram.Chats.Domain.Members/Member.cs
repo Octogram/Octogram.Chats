@@ -1,18 +1,17 @@
 ﻿using System;
+using Octogram.Chats.Domain.Abstractions;
 
 namespace Octogram.Chats.Domain.Members
 {
-	public class Member
+	public class Member : Entity<Guid>
 	{
 		protected Member()
 		{
 		}
-
-		public Member(Guid id)
+		
+		public Member(Guid accountId)
+			: base(accountId)
 		{
-			Id = id;
 		}
-
-		public Guid Id { get; private set; }
 	}
 }
